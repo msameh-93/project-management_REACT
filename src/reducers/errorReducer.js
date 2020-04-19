@@ -6,7 +6,8 @@ const initialState= {};
 const errorReducer= (state= initialState, action) => {
     switch(action.type) {
         case "GET_ERRORS":
-            return action.payload;  //dispatch error object (from server) to store
+            console.log("ERROR OCCURED!");
+            return action.payload;  //returns to error reducer object at redux store
 
         default:
             return state;

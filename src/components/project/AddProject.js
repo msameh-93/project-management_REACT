@@ -13,7 +13,8 @@ class AddProject extends Component {
             identifier: "",
             description: "",
             startDate: "",
-            endDate: ""
+            endDate: "",
+            errors: {}  // used by component to render error messages - SET BY lifecycle hooks - lifecycle hook is fired by changes on mapped state changes (errorszzz @errorReducer)
         }
         this.onChange= this.onChange.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
@@ -30,7 +31,15 @@ class AddProject extends Component {
         console.log(newProjectObj);
         this.props.createProject(newProjectObj, this.props.history);
     }
+    componentWillReceiveProps(propsReceived) {
+        if(propsReceived.errorszzz) {   //check new errorszzz property
+            this.setState({
+                errors: propsReceived.errorszzz
+            })
+        }
+    }
     render() {
+        const {errors}= this.state; //Destructure errors from component state
         return (
             <div>  
                 <div className="register">
@@ -40,18 +49,21 @@ class AddProject extends Component {
                                 <h5 className="display-4 text-center">Create Project form</h5>
                                 <hr />
                                 <form onSubmit={this.onSubmit}>
+                                    {errors.name && <p>{errors.name}</p>}
                                     <div className="form-group">
                                         <input type="text" className="form-control form-control-lg " placeholder="Project Name"
                                         name="name"
                                         value={this.state.name}
                                         onChange={this.onChange} />
                                     </div>
+                                    {errors.name && <p>{errors.identifier}</p>}
                                     <div className="form-group">
                                         <input type="text" className="form-control form-control-lg" placeholder="Unique Project ID"
                                         name="identifier"
                                         value={this.state.identifier}
                                         onChange={this.onChange}/>
                                     </div>
+                                    {errors.name && <p>{errors.description}</p>}
                                     <div className="form-group">
                                         <textarea className="form-control form-control-lg" placeholder="Project Description"
                                         name="description"
@@ -84,10 +96,18 @@ class AddProject extends Component {
 //Function validation
 AddProject.propTypes= {
     //Ensure createProject action function is supplied
-    createProject: PropTypes.func.isRequired
+    createProject: PropTypes.func.isRequired,
+    errorszzz: PropTypes.object.isRequired
 };
 
+const mapStateToProps= (currState) => { //arg is current state and returns an object
+    return {
+        errorszzz: currState.errorsxxx
+        //erros: sets a new prop (errorszzz) that is mapped to state
+        //currState.errors is from redux store current state
+    }
+}
 //function connect({mapStateToProps}?, {mapDispatchToProps}?, {mergeProps}?, options?)
-const ConnectedAddProject= connect(null, {createProject})(AddProject); //connect this component to store
+const ConnectedAddProject= connect(mapStateToProps, {createProject})(AddProject); //connect this component to store
 
 export default ConnectedAddProject;
