@@ -6,18 +6,23 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/layout/Header";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AddProject from "./components/project/AddProject";
+import { Provider } from "react-redux";
+import store from "./store/store";
+
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Header />
-        <Switch>
-          <Route path="/dashboard" component={Dashboard} exact={true} />
-          <Route path="/addProject"  component={AddProject} exact={true}/>
-        </Switch>
-      </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <div className="App">
+          <Header />
+          <Switch>
+            <Route path="/dashboard" component={Dashboard} exact={true} />
+            <Route path="/addProject"  component={AddProject} exact={true}/>
+          </Switch>
+        </div>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
