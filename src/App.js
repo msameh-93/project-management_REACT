@@ -4,14 +4,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 /***Components****/
 import Dashboard from "./components/Dashboard";
 import Header from "./components/layout/Header";
-
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import AddProject from "./components/project/AddProject";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Dashboard />
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Header />
+        <Switch>
+          <Route path="/dashboard" component={Dashboard} exact={true} />
+          <Route path="/addProject"  component={AddProject} exact={true}/>
+        </Switch>
+      </div>
+    </BrowserRouter>
   );
 }
 
