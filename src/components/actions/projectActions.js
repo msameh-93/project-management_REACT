@@ -8,9 +8,22 @@ const createProject= (projectObject, history)=> async dispatch => {
     } catch(error) {
         dispatch({
             type:"GET_ERRORS",
+            payload: error.response.data    //Object passed to reducer (returned to store)
+        })
+    }
+}
+const getProjects= () => async dispatch => {
+    try {
+        const response= await axios.get("http://localhost:8080/api/project");
+        dispatch({      //dispatch call to redux store
+            type: "GET_PROJECTS",
+            payload: response.data
+        })
+    } catch(error) {
+        dispatch({
+            type:"GET_ERRORS",
             payload: error.response.data
         })
     }
 }
-
-export { createProject };
+export { createProject, getProjects };

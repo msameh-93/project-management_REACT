@@ -6,9 +6,10 @@ const initialState= {};
 const errorReducer= (state= initialState, action) => {
     switch(action.type) {
         case "GET_ERRORS":
-            console.log("ERROR OCCURED!");
-            return action.payload;  //returns to error reducer object at redux store
-
+            console.log("@ERROR REDUCER: ERROR OCCURED!");
+            //RETURNS AN OBJECT key/value pairs for store
+            //=== { key: value } in store state
+            return action.payload;  //passed from catch block in action generator - payload: error.response.data
         default:
             return state;
     }

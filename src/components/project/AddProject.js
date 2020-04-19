@@ -33,7 +33,7 @@ class AddProject extends Component {
     }
     componentWillReceiveProps(propsReceived) {
         if(propsReceived.errorszzz) {   //check new errorszzz property
-            this.setState({
+            this.setState({             //set this component state
                 errors: propsReceived.errorszzz
             })
         }
