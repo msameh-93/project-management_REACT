@@ -4,7 +4,7 @@ import combineReducer from "./../reducers/combineReducer";
 
 const initialState= {};
 
-const middleware= [thunk];
+const middleware= [thunk];//Thunk allows asynchronous functions in middleware
 
 const store= createStore(
                     combineReducer, 

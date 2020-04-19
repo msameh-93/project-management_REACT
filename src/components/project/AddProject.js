@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {createProject} from "./../actions/projectActions";
+
 
 class AddProject extends Component {
     constructor(props) {
@@ -24,6 +28,7 @@ class AddProject extends Component {
         const newProjectObj= this.state;    //this case we will not have more states than project form
         //better to assign each key to each value
         console.log(newProjectObj);
+        this.props.createProject(newProjectObj, this.props.history);
     }
     render() {
         return (
@@ -65,7 +70,6 @@ class AddProject extends Component {
                                         value={this.state.endDate}
                                         onChange={this.onChange}/>
                                     </div>
-            
                                     <input type="submit" className="btn btn-primary btn-block mt-4" />
                                 </form>
                             </div>
@@ -77,4 +81,13 @@ class AddProject extends Component {
     };
 }
 
-export default AddProject;
+//Function validation
+AddProject.propTypes= {
+    //Ensure createProject action function is supplied
+    createProject: PropTypes.func.isRequired
+};
+
+//function connect({mapStateToProps}?, {mapDispatchToProps}?, {mergeProps}?, options?)
+const ConnectedAddProject= connect(null, {createProject})(AddProject); //connect this component to store
+
+export default ConnectedAddProject;
