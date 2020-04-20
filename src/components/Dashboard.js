@@ -13,7 +13,7 @@ class Dashboard extends Component {
         this.props.getProjects();
     }
     render() {
-        const myProjects= this.props.projectszzz;
+        const myProjects= this.props.projectszzz;  //Props are passed from mapped props
         return (
             <div className="projects">
                 <div className="container">
@@ -44,8 +44,9 @@ Dashboard.propTypes= {
 }
 const mapStatToProps= ( currState ) => {
     return {
-        projectszzz: currState.projectsxxx.projects,
-        project: currState.projectsxxx.project
+        //projectReduxStore is assigned in combine reducers which is passed to store creation
+        projectszzz: currState.projectReduxStore.projects,  //component props mapped to redux store state
+        project: currState.projectReduxStore.project        
     }
 }
 

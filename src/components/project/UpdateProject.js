@@ -1,51 +1,60 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {createProject} from "./../actions/projectActions";
+import { connect } from "react-redux";
 import classnames from "classnames";
+import PropTypes from "prop-types";
 
-class AddProject extends Component {
+import { getProject, createProject } from "./../actions/projectActions";
+
+class UpdateProject extends Component {
     constructor(props) {
         super(props);
-        //initial state
         this.state= {
+            id: "",
             name: "",
             identifier: "",
             description: "",
             startDate: "",
             endDate: "",
-            errors: {}  // used by component to render error messages - SET BY lifecycle hooks - lifecycle hook is fired by changes on mapped state changes (errorszzz @errorReducer)
+            errors: {}
         }
         this.onChange= this.onChange.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
     }
-    onChange(e) {   //this.onChange.bind(this) bound on tag
+    componentDidMount() {
+        this.props.getProject(this.props.match.params.id, this.props.history);
+    }
+    componentWillReceiveProps(receivedProps) {
+        if(receivedProps.thisProject) {
+            this.setState({
+                id: receivedProps.thisProject.id,
+                ...receivedProps.thisProject    //Set from mapped props to sore stats
+            })
+        }
+        if(receivedProps.errors) {
+            this.setState({
+                errors: receivedProps.errors
+            })
+        }
+    }
+    onChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
     onSubmit(e) {
         e.preventDefault();
-        const newProjectObj= this.state;    //this case we will not have more states than project form
-        //better to assign each key to each value
-        this.props.createProject(newProjectObj, this.props.history);
-    }
-    componentWillReceiveProps(propsReceived) {
-        if(propsReceived.errorszzz) {   //check new errorszzz property
-            this.setState({             //set this component state
-                errors: propsReceived.errorszzz
-            })
-        }
+        const updatedProjectObject= this.state;
+        this.props.createProject(updatedProjectObject, this.props.history);
     }
     render() {
-        const {errors}= this.state; //Destructure errors from component state
+        const {errors}= this.state;
         return (
             <div>  
                 <div className="register">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-8 m-auto">
-                                <h5 className="display-4 text-center">Create Project form</h5>
+                                <h5 className="display-4 text-center">Update Project form</h5>
                                 <hr />
                                 <form onSubmit={this.onSubmit}>
                                     <div className="form-group">
@@ -64,7 +73,9 @@ class AddProject extends Component {
                                           )}
                                     </div>
                                     <div className="form-group">
-                                        <input type="text" 
+                                        <input
+                                        disabled 
+                                        type="text" 
                                         className={classnames("form-control form-control-lg", {
                                                     "is-invalid": errors.identifier
                                                 })} 
@@ -113,24 +124,21 @@ class AddProject extends Component {
                 </div>
             </div>
         );
-    };
-}
-
-//Function validation
-AddProject.propTypes= {
-    //Ensure createProject action function is supplied
-    createProject: PropTypes.func.isRequired,
-    errorszzz: PropTypes.object.isRequired
-};
-
-const mapStateToProps= (currState) => { //arg is current state and returns an object
-    return {
-        errorszzz: currState.errorsReduxStore
-        //erros: sets a new prop (errorszzz) that is mapped to state
-        //currState.errors is from redux store current state
     }
 }
-//function connect({mapStateToProps}?, {mapDispatchToProps}?, {mergeProps}?, options?)
-const ConnectedAddProject= connect(mapStateToProps, {createProject})(AddProject); //connect this component to store
 
-export default ConnectedAddProject;
+UpdateProject.propTypes= {
+    thisProject: PropTypes.object.isRequired,
+    getProject: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired
+}
+
+const mapStateToProps= (currState) => {
+    return {
+        thisProject: currState.projectReduxStore.project,
+        errors: currState.errorsReduxStore
+    }
+}
+const ConnectedUpdateProject= connect(mapStateToProps, {getProject, createProject})(UpdateProject);
+
+export default ConnectedUpdateProject;
