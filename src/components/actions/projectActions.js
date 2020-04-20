@@ -50,4 +50,16 @@ const getProject= (identifier, history) => async dispatch => {
     }
 
 }
-export { createProject, getProjects, getProject };
+const deleteProject= (identifier) => async dispatch => {
+    try {
+        await axios.delete(`http://localhost:8080/api/project/${identifier}`);
+        dispatch({
+            type: "DELETE_PROJECT",
+            payload: identifier
+        })
+    } catch(error) {
+        console.log(error);
+    }
+
+}
+export { createProject, getProjects, getProject, deleteProject };
