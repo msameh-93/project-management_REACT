@@ -12,6 +12,7 @@ import AddProject from "./components/project/AddProject";
 import UpdateProject from "./components/project/UpdateProject";
 import ProjectBoard from "./components/project/backlog/ProjectBoard";
 import AddProjectTaskForm from "./components/project/backlog/AddProjectTaskForm";
+import UpdateProjectTaskForm from "./components/project/backlog/UpdateProjectTaskForm";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/updateProject/:id" component={UpdateProject} exact={true} />
             <Route path="/projectboard/:id" component={ProjectBoard} exact={true} />
             <Route path="/addtaskform/:id" component={AddProjectTaskForm} exact={true} />
+            <Route path="/updatetaskform/:id/:projectSequence" component={UpdateProjectTaskForm} exact={true} />
           </Switch>
         </div>
       </BrowserRouter>

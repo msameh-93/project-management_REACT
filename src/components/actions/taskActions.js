@@ -15,10 +15,16 @@ const createTask= (newTask, projectIdentifier, history) => async dispatch =>{
         })
     }
 }
-const updateTask= (updatedTask, projectIdentifier, projectSequence) => async dispatch => {
+const updateTask= (updatedTask, projectIdentifier, projectSequence, history) => async dispatch => {
     try {
-        await axios.post(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`,
-            updatedTask);
+        await 
+            axios.post(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`,
+                updatedTask);
+            history.push(`/projectboard/${projectIdentifier}`);
+            dispatch({
+                type: "GET_ERRORS",
+                payload: {}
+            })
     } catch(error) {
         dispatch({
             type: "GET_ERRORS",
@@ -40,8 +46,24 @@ const getAllTasks= (projectIdentifier) => async dispatch => {
         })
     }
 }
-const getTask= (projectIdentifier, projectSequence) => {
-
+const getTask= (projectIdentifier, projectSequence) => async dispatch => {
+    try {
+        const response= 
+            await axios.get(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`);
+        dispatch({
+            type: "GET_TASK",
+            payload: response.data
+        })
+        dispatch({
+            type: "GET_ERRORS",
+            payload: {}
+        })
+    } catch( error ) {
+        dispatch({
+            type: "GET_ERRORS",
+            payload: error.response.data
+        })
+    }
 }
 const deleteTask= (projectIdentifier, projectSequence) => {
 

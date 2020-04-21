@@ -32,7 +32,11 @@ class AddProjectTaskForm extends Component {
         this.props.createTask(newTask, this.props.match.params.id, this.props.history)
     }
     componentWillReceiveProps(receivedProps) {
-        this.state.errors= receivedProps.errors;
+        if(receivedProps.errors) {
+            this.setState({
+                errors: receivedProps.errors
+            });
+        }
     }
     render() {
         const {errors}= this.state;

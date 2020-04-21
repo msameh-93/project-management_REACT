@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
 class Backlog extends Component {
-
+    
     render() {
         return (
             <div className="container">
@@ -25,7 +25,7 @@ class Backlog extends Component {
                                 <p className="card-text text-truncate ">
                                     project_task.acceptanceCriteria
                                 </p>
-                                <Link to="" className="btn btn-primary">
+                                <Link to={`/updatetaskform/:id/:sequence`}className="btn btn-primary">
                                     View / Update
                                 </Link>
 
