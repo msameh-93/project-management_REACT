@@ -35,7 +35,9 @@ class UpdateProjectTaskForm extends Component {
                             this.props.history)
     }
     componentDidMount() {
-        this.props.getTask(this.props.match.params.id, this.props.match.params.projectSequence);
+        this.props.getTask(this.props.match.params.id, 
+                        this.props.match.params.projectSequence, 
+                        this.props.history);
     }
     componentWillReceiveProps(receivedProps) {
         if(receivedProps.errors) {

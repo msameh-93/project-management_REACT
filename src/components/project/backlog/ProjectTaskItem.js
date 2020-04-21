@@ -8,7 +8,11 @@ class ProjectTaskItem extends Component {
     constructor(props) {
         super(props);
         this.state= {
-
+            summary: "",
+            acceptanceCriteria: "",
+            dueDate: "",
+            priority: "",
+            status: ""
         }
         this.onDeleteClick= this.onDeleteClick.bind(this);
     }
@@ -16,10 +20,28 @@ class ProjectTaskItem extends Component {
         this.props.deleteTask(this.props.task.projectIdentifier, this.props.task.projectSequence);
     }
     render() {
+        let priorityClass;
+        let priorityString;
+        switch(this.props.task.priority) {
+            case 1:
+                priorityClass= "bg-danger text-light";
+                priorityString= "HIGH";
+                break;
+            case 2:
+                priorityClass= "bg-warning text-light";
+                priorityString= "MEDIUM";
+                break;
+            case 3:
+                priorityClass= "bg-info text-light";
+                priorityString= "LOW";
+                break;
+            default:
+                break;
+        }
         return (
             <div className="card mb-1 bg-light">
-                <div className="card-header text-primary">
-                    ID: {this.props.task.projectSequence} -- Priority: {this.props.task.priority}
+                <div className={`card-header text-primary ${priorityClass}`}>
+                    ID: {this.props.task.projectSequence} -- Priority: {priorityString}
                 </div>
                 <div className="card-body bg-light">
                     <h5 className="card-title">{this.props.task.summary}</h5>

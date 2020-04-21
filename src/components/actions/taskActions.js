@@ -46,7 +46,7 @@ const getAllTasks= (projectIdentifier) => async dispatch => {
         })
     }
 }
-const getTask= (projectIdentifier, projectSequence) => async dispatch => {
+const getTask= (projectIdentifier, projectSequence, history) => async dispatch => {
     try {
         const response= 
             await axios.get(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`);
@@ -63,6 +63,8 @@ const getTask= (projectIdentifier, projectSequence) => async dispatch => {
             type: "GET_ERRORS",
             payload: error.response.data
         })
+        history.push(`/projectboard/${projectIdentifier}`);
+        console.log("ERROR");
     }
 }
 const deleteTask= (projectIdentifier, projectSequence) => async dispatch => {
