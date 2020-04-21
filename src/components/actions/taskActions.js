@@ -65,8 +65,23 @@ const getTask= (projectIdentifier, projectSequence) => async dispatch => {
         })
     }
 }
-const deleteTask= (projectIdentifier, projectSequence) => {
-
+const deleteTask= (projectIdentifier, projectSequence) => async dispatch => {
+    try {
+        await axios.delete(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`);
+        dispatch({
+            type: "DELETE_TASK",
+            payload: projectSequence
+        })
+        dispatch({
+            type:"GET_ERRORS",
+            payload: {}
+        })
+    } catch(error) {
+        dispatch({
+            type:"GET_ERRORS",
+            payload: {}
+        })
+    }
 }
 
  

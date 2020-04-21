@@ -18,7 +18,7 @@ const taskReducer= (state= initialState, action) => {
         case "DELETE_TASK":
             return {
                 ...state,
-                projects: state.projects.filter(el => el.projectSequence !== action.payload)
+                tasks: state.tasks.filter(el => el.projectSequence !== action.payload)
             }
         default:
             return state;

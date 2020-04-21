@@ -8,7 +8,6 @@ import { getAllTasks } from "../../actions/taskActions";
 class ProjectBoard extends Component {
     componentDidMount() {
         this.props.getAllTasks(this.props.match.params.id);
-        console.log(this.props.tasks);
     }
     render() {
         return (
