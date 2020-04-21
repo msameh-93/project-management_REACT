@@ -5,7 +5,6 @@ const initialState= {   //project state IN STORE!!
 
 const projectReducer= (state= initialState, action) => {
     //action is sent through redux mapped dispatch
-    console.log("@PROJECT REDUCER: GETTING PROJECT!");
     switch(action.type) {
         case "GET_PROJECTS":
             return {        //changes current redux store state

@@ -10,7 +10,8 @@ import Dashboard from "./components/Dashboard";
 import Header from "./components/layout/Header";
 import AddProject from "./components/project/AddProject";
 import UpdateProject from "./components/project/UpdateProject";
-import Backlog from "./components/project/Backlog";
+import ProjectBoard from "./components/project/backlog/ProjectBoard";
+import AddProjectTaskForm from "./components/project/backlog/AddProjectTaskForm";
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
             <Route path="/dashboard" component={Dashboard} exact={true} />
             <Route path="/addProject"  component={AddProject} exact={true}/>
             <Route path="/updateProject/:id" component={UpdateProject} exact={true} />
-            <Route path="/backlog/:id" component={Backlog} exact={true} />
+            <Route path="/projectboard/:id" component={ProjectBoard} exact={true} />
+            <Route path="/addtaskform/:id" component={AddProjectTaskForm} exact={true} />
           </Switch>
         </div>
       </BrowserRouter>
