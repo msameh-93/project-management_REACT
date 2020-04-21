@@ -14,6 +14,7 @@ class AddProjectTaskForm extends Component {
             dueDate: "",
             priority: "",
             status: "",
+            errors: {}
         }
         this.onChange= this.onChange.bind(this);
         this.onSubmit= this.onSubmit.bind(this);
@@ -30,7 +31,11 @@ class AddProjectTaskForm extends Component {
         }
         this.props.createTask(newTask, this.props.match.params.id, this.props.history)
     }
+    componentWillReceiveProps(receivedProps) {
+        this.state.errors= receivedProps.errors;
+    }
     render() {
+        const {errors}= this.state;
         return (
             <div className="add-PBI">
                 <div className="container">
@@ -45,11 +50,18 @@ class AddProjectTaskForm extends Component {
                                 <div className="form-group">
                                     <input 
                                         type="text" 
-                                        className="form-control form-control-lg" 
+                                        className={classnames("form-control form-control-lg", {
+                                            "is-invalid": errors.summary
+                                        })} 
                                         name="summary" 
                                         placeholder="Project Task summary" 
                                         value={this.state.summary}
                                         onChange={this.onChange}/>
+                                        {errors.summary && (
+                                            <div className="invalid-feedback">
+                                              {errors.summary}
+                                            </div>
+                                          )}
                                 </div>
                                 <div className="form-group">
                                     <textarea 
@@ -108,6 +120,11 @@ AddProjectTaskForm.propTypes= {
     createTask: PropTypes.func.isRequired
 }
 
-const ConnectedAddProjectTaskForm= connect(null, {createTask})(AddProjectTaskForm);
+const mapStateToProps= (currState) => {
+    return {
+        errors: currState.errorsReduxStore
+    }
+}
+const ConnectedAddProjectTaskForm= connect(mapStateToProps, {createTask})(AddProjectTaskForm);
 
 export default ConnectedAddProjectTaskForm;
