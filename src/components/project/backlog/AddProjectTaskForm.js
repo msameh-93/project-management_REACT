@@ -1,6 +1,9 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
+import {createTask} from "./../../actions/taskActions";
+import classnames from "classnames";
+import PropTypes from "prop-types";
 
 class AddProjectTaskForm extends Component {
     constructor(props) {
@@ -12,11 +15,20 @@ class AddProjectTaskForm extends Component {
             priority: "",
             status: "",
         }
+        this.onChange= this.onChange.bind(this);
+        this.onSubmit= this.onSubmit.bind(this);
     }
     onChange(e) {
         this.setState({
             [e.target.name]: e.target.value
         })
+    }
+    onSubmit(e) {
+        e.preventDefault();
+        const newTask= {
+            ...this.state
+        }
+        this.props.createTask(newTask, this.props.match.params.id, this.props.history)
     }
     render() {
         return (
@@ -37,18 +49,31 @@ class AddProjectTaskForm extends Component {
                                         name="summary" 
                                         placeholder="Project Task summary" 
                                         value={this.state.summary}
-                                        onChange={this.onChange}
-                                        />
+                                        onChange={this.onChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <textarea className="form-control form-control-lg" placeholder="Acceptance Criteria" name="acceptanceCriteria"></textarea>
+                                    <textarea 
+                                        className="form-control form-control-lg" 
+                                        placeholder="Acceptance Criteria" 
+                                        name="acceptanceCriteria"
+                                        value={this.state.acceptanceCriteria}
+                                        onChange={this.onChange}></textarea>
                                 </div>
                                 <h6>Due Date</h6>
                                 <div className="form-group">
-                                    <input type="date" className="form-control form-control-lg" name="dueDate" />
+                                    <input 
+                                        type="date" 
+                                        className="form-control form-control-lg" 
+                                        name="dueDate" 
+                                        value={this.state.dueDate}
+                                        onChange={this.onChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <select className="form-control form-control-lg" name="priority">
+                                    <select 
+                                        className="form-control form-control-lg" 
+                                        name="priority"
+                                        value={this.state.priority}
+                                        onChange={this.onChange}>
                                         <option value={0}>Select Priority</option>
                                         <option value={1}>High</option>
                                         <option value={2}>Medium</option>
@@ -57,7 +82,11 @@ class AddProjectTaskForm extends Component {
                                 </div>
         
                                 <div className="form-group">
-                                    <select className="form-control form-control-lg" name="status">
+                                    <select 
+                                        className="form-control form-control-lg" 
+                                        name="status"
+                                        value={this.state.status}
+                                        onChange={this.onChange}>
                                         <option value="">Select Status</option>
                                         <option value="TO_DO">TO DO</option>
                                         <option value="IN_PROGRESS">IN PROGRESS</option>
@@ -75,6 +104,10 @@ class AddProjectTaskForm extends Component {
     }
 }
 
-const ConnectedAddProjectTaskForm= connect(null, null)(AddProjectTaskForm);
+AddProjectTaskForm.propTypes= {
+    createTask: PropTypes.func.isRequired
+}
+
+const ConnectedAddProjectTaskForm= connect(null, {createTask})(AddProjectTaskForm);
 
 export default ConnectedAddProjectTaskForm;
