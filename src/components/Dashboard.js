@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 import ProjectItem from "./project/ProjectItem";
-import CreateProjectButton from "./project/CreateProjectButton";
 import { getProjects } from "./actions/projectActions";
 
 class Dashboard extends Component {
@@ -20,7 +20,9 @@ class Dashboard extends Component {
                         <div className="col-md-12">
                             <h1 className="display-4 text-center">Projects</h1>
                             <br />
-                            <CreateProjectButton />
+                            <Link to="/addProject" className="btn btn-lg btn-info">
+                            Create a Project
+                            </Link>
                             <br />
                             <hr />                         
                             {myProjects.map(el => {

@@ -10,7 +10,7 @@ class Header extends Component {
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item">
                                 <Link className="nav-link" to="/dashboard">
-                                Personal Project Management Tool
+                                Xersonal Project Management Tool
                                 </Link>
                             </li>
                         </ul>
