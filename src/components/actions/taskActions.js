@@ -2,7 +2,7 @@ import axios from "axios";
 
 const createTask= (newTask, projectIdentifier, history) => async dispatch =>{
     try {
-        await axios.post(`http://localhost:8080/api/backlog/${projectIdentifier}`, newTask);
+        await axios.post(`/api/backlog/${projectIdentifier}`, newTask);
         history.push(`/projectboard/${projectIdentifier}`);
         dispatch({
             type: "GET_ERRORS",
@@ -18,7 +18,7 @@ const createTask= (newTask, projectIdentifier, history) => async dispatch =>{
 const updateTask= (updatedTask, projectIdentifier, projectSequence, history) => async dispatch => {
     try {
         await 
-            axios.post(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`,
+            axios.post(`/api/backlog/${projectIdentifier}/${projectSequence}`,
                 updatedTask);
             history.push(`/projectboard/${projectIdentifier}`);
             dispatch({
@@ -34,7 +34,7 @@ const updateTask= (updatedTask, projectIdentifier, projectSequence, history) => 
 }
 const getAllTasks= (projectIdentifier) => async dispatch => {
     try {
-        const response= await axios.get(`http://localhost:8080/api/backlog/${projectIdentifier}`);
+        const response= await axios.get(`/api/backlog/${projectIdentifier}`);
         dispatch({
             type: "GET_TASKS",
             payload: response.data
@@ -49,7 +49,7 @@ const getAllTasks= (projectIdentifier) => async dispatch => {
 const getTask= (projectIdentifier, projectSequence, history) => async dispatch => {
     try {
         const response= 
-            await axios.get(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`);
+            await axios.get(`/api/backlog/${projectIdentifier}/${projectSequence}`);
         dispatch({
             type: "GET_TASK",
             payload: response.data
@@ -69,7 +69,7 @@ const getTask= (projectIdentifier, projectSequence, history) => async dispatch =
 }
 const deleteTask= (projectIdentifier, projectSequence) => async dispatch => {
     try {
-        await axios.delete(`http://localhost:8080/api/backlog/${projectIdentifier}/${projectSequence}`);
+        await axios.delete(`/api/backlog/${projectIdentifier}/${projectSequence}`);
         dispatch({
             type: "DELETE_TASK",
             payload: projectSequence
